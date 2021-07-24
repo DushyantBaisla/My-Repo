@@ -18,7 +18,7 @@ request(url, function cb(err, response, html) {
 function getMatches(html) {
     let selectorTool = cheerio.load(html);
     let matches = selectorTool("a[data-hover='Scorecard']");
-
+    console.log(matches.length)
     for (let i = 0; i < matches.length; i++) {
         let link = ("https://www.espncricinfo.com" + selectorTool(matches[i]).attr("href"));
 

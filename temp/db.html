@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    DB<input class="db"></input>
+    Version<input class="ver"></input>
+    <button class="create">Create</button>
+    <button class="add">Add</button>
+    <script>
+        let db;
+        //create button
+        const cbutton = document.querySelector(".create");
+        cbutton.addEventListener("click", function(){
+            create();
+        })
+        //add button
+        let abutton = document.querySelector(".add");
+        abutton.addEventListener("click", function(){
+            addData();
+        })
+        //create funtion
+        function create(){
+            let dbName = document.querySelector(".db").value;
+            let version = document.querySelector(".ver").value;           
+            let req = indexedDB.open(dbName, version);
+
+            //on upgrade
+            req.onupgradeneeded = function(){
+                db = req.result;
+                db.createObjectStore(dbName,{keyPath:'id'});
+            }
+            //on success
+            req.onsuccess = function(){
+                db = req.result;
+            }
+            //on error/fail/reject
+            req.onerror = function(e){
+                console.log(e);
+            }
+        }
+        //add funtion
+        function addData(){
+            let data = {
+                id : "1000",
+                text: "hello"
+            }
+            let dbName = document.querySelector(".db").value;
+            let transaction = db.transaction(dbName,"readwrite");
+            let obj = transaction.objectStore(dbName);
+            obj.add(data);
+        }
+    </script>
+</body>
+</html>

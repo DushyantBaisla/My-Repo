@@ -1,0 +1,15 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+body{
+    border: 1px solid;
+    height: 100vh;
+    width: 100vh;
+}
+.a{
+    border: 1px solid;
+    height: 50%;
+    width: 50%;
+    text-align: center;
+}

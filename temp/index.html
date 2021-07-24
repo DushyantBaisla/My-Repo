@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+        }
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .box {
+            float: left;
+            z-index: 1;
+            border: 1px solid;
+            height: 3rem;
+            width: 3rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" style="background-color: red;" c="red"></div>
+    <div class="box" style="background-color: yellow;" c="yellow"></div>
+    <div class="box" style="background-color: blue;" c="blue"></div>
+    <canvas id="board"></canvas>
+    <script>
+        let board = document.querySelector("#board");
+        board.height = window.innerHeight;
+        board.width = window.innerWidth;
+        let tool = board.getContext('2d');
+        
+        let box = document.querySelectorAll(".box");        
+        for (let i = 0; i < box.length; i++) {
+            box[i].addEventListener("click", function (e) {
+                tool.strokeStyle = box[i].getAttribute("c")
+                console.log(box[i].getAttribute("c"))
+            })
+        }
+        let isMouseDown = false;
+        //correction will be dynamic and change if we add or remove div/items
+        let correction = document.body.getBoundingClientRect().height-board.getBoundingClientRect().height-4;
+        console.log(correction)
+        board.addEventListener("mousedown", function (e) {
+            let x = e.clientX;
+            let y = e.clientY - correction;
+            isMouseDown = true;
+            tool.beginPath();
+            tool.moveTo(x, y);
+        })
+        board.addEventListener("mousemove", function (e) {
+            let x = e.clientX;
+            let y = e.clientY - correction;
+            if (isMouseDown) {
+                tool.lineTo(x, y);
+                tool.stroke();
+            }
+        })
+        board.addEventListener("mouseup", function () {
+            isMouseDown = false;
+        })
+    </script>
+</body>
+
+</html>

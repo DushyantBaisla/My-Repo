@@ -1,0 +1,178 @@
+body{
+    margin: 0;
+}
+*{
+    box-sizing: border-box;   
+}
+
+/* NEW OPEN SAVE */
+.menu-container{
+    display: flex;
+    border: 1px solid red;
+    height: 2rem;
+    justify-content: center;  
+    align-items: center;     
+}
+.menu-icon1{ /* new open save icons */ 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    width: 2.5rem;
+    height: 90%;
+    margin-right: 5rem;
+}
+
+/* MENU OPTIONS */
+.menu-options{    
+    border: 1px solid red;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+}
+.font-size{
+    margin-left: 3rem;
+    margin-right: 1rem;
+    height: 50%;
+    max-width: 4%;
+}
+.font-family{
+    margin-right: 5rem;
+    height: 50%;
+    width: 15%;
+}
+.format-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    height: 80%;
+    max-width: 20%;
+    margin-right: 5rem;
+}
+.alignment-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    height: 80%;
+    width: 20%;
+}
+.menu-icon2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+    height: 2rem;
+    width: 2rem;
+    margin-left: 1rem;  
+    margin-right: 1rem ;
+}
+
+/*FORMULA*/
+.formula-container{
+    display: flex;
+    border: 1px solid red;
+    height: 2rem;
+    align-items: center;
+}
+.address{
+    text-align: center;
+    border: 1px solid;
+    height: 70%;
+    width: 10%;
+    margin-right: 10rem;
+    margin-left: 3rem;
+}
+.formula{
+    border: 1px solid;
+    height: 70%;
+    width: 60%;
+}
+
+/* SHEETS */
+.sheets-container{
+    height: 2.5rem;
+    display: flex;
+}
+.icon-container{
+    border: 1px solid;
+    width: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon{
+    font-size: 1.2rem;
+}
+.sheet-list{
+    display: flex;
+    border: 1px solid;
+    width: 96%;
+    overflow: auto;
+}
+.sheet-list::-webkit-scrollbar {
+    display: none;
+  }
+.sheet{
+    background-color: white;
+    border: 1px solid;
+    height: 100%;
+    min-width: 5rem;
+    padding-left: 0.5rem;
+    padding-top: 0.5rem;
+}
+.active{
+    background-color: grey;
+}
+
+/* GRID */
+.grid-container{
+    height: calc( 100vh - ( 5rem + 2rem + 2.5rem ));
+    background-color: rosybrown;
+    overflow-x: auto;
+    position: relative;
+}
+.top-left{
+    background-color: grey;
+}
+.top-row{
+    display: flex;    
+    position: absolute;
+    top: 0rem;
+    left: 2rem;
+}
+.left-col{
+    
+}
+.grid{
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    background-color: lightcoral;
+}
+.cell{
+    height: 2rem;
+    min-width: 5rem;
+    border: 1px solid;
+    text-align: center;
+    max-width: 5rem;
+}
+.a{
+    border: 3px solid;
+}
+.block{
+    border: 1px solid;
+    height: 2rem;
+    width: 2rem;
+    text-align: center;
+}
+.row{
+    display: flex;
+}
+
+/*FORMATTING*/
+.selected{
+    background-color: lightgreen;
+}
+
