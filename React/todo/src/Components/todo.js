@@ -20,6 +20,12 @@ export default class todo extends Component {
             })
         }
     }
+    onDelete =(id)=>{
+        let arr = this.state.tasks.filter(task=>{
+            return (task.id !== id);
+        })
+        this.setState({tasks:arr})
+    }
     render() {
         return (
             <div>
@@ -31,9 +37,9 @@ export default class todo extends Component {
                     <ul>
                         {
                             this.state.tasks.map(task => (
-                                <li>
+                                <li key={task.id}>
                                     <h1>{task.txt}</h1>
-                                    <button>X</button>
+                                    <button onClick={()=>this.onDelete(task.id)}>X</button>
                                 </li>
                             ))
                         }
