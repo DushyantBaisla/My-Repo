@@ -15,25 +15,36 @@ export default class movie extends Component {
             return movieObj._id !== id;
         })
         this.setState({
-            movies: moviesArr          
+            movies: moviesArr
         })
     }
     //-------Update state of current SearchText--------
     handleChange = (e) => {
         let txt = e.target.value;
-        this.setState({searchText:txt})
+        this.setState({ searchText: txt })
+    }
+    //----Sort by Ratings------
+    sortRatings = (e) => {
+        let className = e.target.className;
+        let tempArr = this.state.movies.sort(function (a, b) {
+            if (className === 'fas fa-sort-up') {
+                return a.dailyRentalRate - b.dailyRentalRate;
+            }
+            return b.dailyRentalRate - a.dailyRentalRate;
+        })
+        this.setState({ movies: tempArr });
     }
 
     render() {
         //-------------Filtering movies --------
         let { movies, searchText } = this.state;
         let filteredMovies = [];
-        if(searchText !== ''){
-            filteredMovies = movies.filter(movieObj =>{
+        if (searchText !== '') {
+            filteredMovies = movies.filter(movieObj => {
                 let title = movieObj.title.trim().toLowerCase();
                 return title.includes(searchText.toLowerCase());
             })
-        }else{
+        } else {
             filteredMovies = movies;
         }
         //-------------Filtering movies --------
@@ -44,33 +55,34 @@ export default class movie extends Component {
                 <div className='col-3'>
 
                 </div>
-        {/*----------Movies Table Area----------*/}
+                {/*----------Movies Table Area----------*/}
                 <div className='col-9'>
                     <input type='text' onChange={this.handleChange} value={this.searchText}></input>
-                    <table class='table'>
-                <thead>
-                    <tr>
-                        <th scope='col'>#</th>
-                        <th scope='col'>Title</th>
-                        <th scope='col'>Genre</th>
-                        <th scope='col'>RATING
-                        <i class="fas fa-sort-up"></i>
-                        <i class="fas fa-sort-down"></i>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredMovies.map(movieObj => (
-                        <tr scope='row' key={movieObj._id}>
-                            <td></td>
-                            <td>{movieObj.title}</td>
-                            <td>{movieObj.genre.name}</td>
-                            <td>{movieObj.dailyRentalRate}</td>
-                           <td><button type='button' className="btn btn-danger" onClick={() => this.onDelete(movieObj._id)}>Delete</button></td>
-                        </tr>
-                    ))
-                    }
-                </tbody>
+                    <table className='table'>
+                        <thead>
+                            <tr>
+                                <th scope='col'>#</th>
+                                <th scope='col'>Title</th>
+                                <th scope='col'>Genre</th>
+                                <th scope='col'>
+                                    Ratings
+                                    <i className="fas fa-sort-up" onClick={this.sortRatings}></i>
+                                    <i className="fas fa-sort-down" onClick={this.sortRatings}></i>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {filteredMovies.map(movieObj => (
+                                <tr scope='row' key={movieObj._id}>
+                                    <td></td>
+                                    <td>{movieObj.title}</td>
+                                    <td>{movieObj.genre.name}</td>
+                                    <td>{movieObj.dailyRentalRate}</td>
+                                    <td><button type='button' className="btn btn-danger" onClick={() => this.onDelete(movieObj._id)}>Delete</button></td>
+                                </tr>
+                            ))
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>
