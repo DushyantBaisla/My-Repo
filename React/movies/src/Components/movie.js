@@ -6,7 +6,9 @@ export default class movie extends Component {
         super(props)
         this.state = {
             movies: getMovies(),
-            searchText: ''
+            searchText: '',
+            pageNum: 1,
+            limit: getMovies().length
         }
     }
     //---------Deleting movie------------
@@ -14,6 +16,7 @@ export default class movie extends Component {
         let moviesArr = this.state.movies.filter(movieObj => {
             return movieObj._id !== id;
         })
+
         this.setState({
             movies: moviesArr
         })
@@ -21,7 +24,9 @@ export default class movie extends Component {
     //-------Update state of current SearchText--------
     handleChange = (e) => {
         let txt = e.target.value;
-        this.setState({ searchText: txt })
+        this.setState({
+            searchText: txt
+        })
     }
     //----Sort by Ratings------
     sortRatings = (e) => {
@@ -34,10 +39,22 @@ export default class movie extends Component {
         })
         this.setState({ movies: tempArr });
     }
+    //--------Dynamic limit of movies per page ------------
+    handleLimit = (e) => {
+        let num = Number(e.target.value);
+        this.setState({ limit: num })
+    }
+
+    //------- Change Page --------------
+    changePage = (pNo) => {
+        this.setState({pageNum:pNo})
+    }
+    //----------------- Render function -------------
 
     render() {
+
         //-------------Filtering movies --------
-        let { movies, searchText } = this.state;
+        let { movies, searchText, pageNum, limit } = this.state;
         let filteredMovies = [];
         if (searchText !== '') {
             filteredMovies = movies.filter(movieObj => {
@@ -47,6 +64,19 @@ export default class movie extends Component {
         } else {
             filteredMovies = movies;
         }
+
+        //--------- Pagination ---------
+        let numberOfPages = Math.ceil(filteredMovies.length / limit);
+        let pages = []
+        for (let i = 0; i < numberOfPages; i++) {
+            pages.push(i + 1);
+        }
+
+        //----- Movies per page --------        
+        let si = (pageNum - 1) * limit;
+        let ei = si + limit;
+        filteredMovies = filteredMovies.slice(si, ei);
+
         //-------------Filtering movies --------
 
         return (
@@ -58,6 +88,7 @@ export default class movie extends Component {
                 {/*----------Movies Table Area----------*/}
                 <div className='col-9'>
                     <input type='text' onChange={this.handleChange} value={this.searchText}></input>
+                    <input type='number' min='1' max={this.state.movies.length} onChange={this.handleLimit} value={this.state.limit < filteredMovies.length ? this.state.limit : filteredMovies.length}></input>
                     <table className='table'>
                         <thead>
                             <tr>
@@ -84,6 +115,18 @@ export default class movie extends Component {
                             }
                         </tbody>
                     </table>
+                    <ul className="pagination">
+                        {pages.map(pNo => {
+                            let clName = pNo == pageNum ? 'page-item active' : 'page-item'
+                            return (
+                                <li className={clName} key={pNo} onClick={()=>this.changePage(pNo)}>
+                                    <a className="page-link" href="#">{pNo}</a>
+                                </li>
+                            )
+                        })
+                        }
+
+                    </ul>
                 </div>
             </div>
         )
