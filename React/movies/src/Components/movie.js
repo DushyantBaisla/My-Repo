@@ -1,15 +1,23 @@
 import React, { Component } from 'react'
 import { getMovies } from './getMovies'
-
+import axios from 'axios'
 export default class movie extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            movies: getMovies(),
+            movies: [],
             searchText: '',
             pageNum: 1,
-            limit: getMovies().length
+            limit: 4
         }
+    }
+    async componentDidMount() {
+        console.log("promise");
+        let promiseObj = await axios.get("https://backend-react-movie.herokuapp.com/movies");
+
+        this.setState({
+            movies: promiseObj.data.movies
+        })
     }
     //---------Deleting movie------------
     onDelete = (id) => {
@@ -47,7 +55,7 @@ export default class movie extends Component {
 
     //------- Change Page --------------
     changePage = (pNo) => {
-        this.setState({pageNum:pNo})
+        this.setState({ pageNum: pNo })
     }
     //----------------- Render function -------------
 
@@ -80,55 +88,67 @@ export default class movie extends Component {
         //-------------Filtering movies --------
 
         return (
-            <div className='row'>
-                {/* */}
-                <div className='col-3'>
+            <>
+                {
+                    this.state.movies.length == 0
+                        ?
+                        //if
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                        //else
+                        :
+                        <div className='row'>
+                            {/* */}
+                            <div className='col-3'>
 
-                </div>
-                {/*----------Movies Table Area----------*/}
-                <div className='col-9'>
-                    <input type='text' onChange={this.handleChange} value={this.searchText}></input>
-                    <input type='number' min='1' max={this.state.movies.length} onChange={this.handleLimit} value={this.state.limit < filteredMovies.length ? this.state.limit : filteredMovies.length}></input>
-                    <table className='table'>
-                        <thead>
-                            <tr>
-                                <th scope='col'>#</th>
-                                <th scope='col'>Title</th>
-                                <th scope='col'>Genre</th>
-                                <th scope='col'>
-                                    Ratings
-                                    <i className="fas fa-sort-up" onClick={this.sortRatings}></i>
-                                    <i className="fas fa-sort-down" onClick={this.sortRatings}></i>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredMovies.map(movieObj => (
-                                <tr scope='row' key={movieObj._id}>
-                                    <td></td>
-                                    <td>{movieObj.title}</td>
-                                    <td>{movieObj.genre.name}</td>
-                                    <td>{movieObj.dailyRentalRate}</td>
-                                    <td><button type='button' className="btn btn-danger" onClick={() => this.onDelete(movieObj._id)}>Delete</button></td>
-                                </tr>
-                            ))
-                            }
-                        </tbody>
-                    </table>
-                    <ul className="pagination">
-                        {pages.map(pNo => {
-                            let clName = pNo == pageNum ? 'page-item active' : 'page-item'
-                            return (
-                                <li className={clName} key={pNo} onClick={()=>this.changePage(pNo)}>
-                                    <a className="page-link" href="#">{pNo}</a>
-                                </li>
-                            )
-                        })
-                        }
+                            </div>
+                            {/*----------Movies Table Area----------*/}
+                            <div className='col-9'>
+                                <input type='text' onChange={this.handleChange} value={this.searchText}></input>
+                                <input type='number' min='1' max={this.state.movies.length} onChange={this.handleLimit} value={this.state.limit < filteredMovies.length ? this.state.limit : filteredMovies.length}></input>
+                                <table className='table'>
+                                    <thead>
+                                        <tr>
+                                            <th scope='col'>#</th>
+                                            <th scope='col'>Title</th>
+                                            <th scope='col'>Genre</th>
+                                            <th scope='col'>
+                                                Ratings
+                                                <i className="fas fa-sort-up" onClick={this.sortRatings}></i>
+                                                <i className="fas fa-sort-down" onClick={this.sortRatings}></i>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {filteredMovies.map(movieObj => (
+                                            <tr scope='row' key={movieObj._id}>
+                                                <td></td>
+                                                <td>{movieObj.title}</td>
+                                                <td>{movieObj.genre.name}</td>
+                                                <td>{movieObj.dailyRentalRate}</td>
+                                                <td><button type='button' className="btn btn-danger" onClick={() => this.onDelete(movieObj._id)}>Delete</button></td>
+                                            </tr>
+                                        ))
+                                        }
+                                    </tbody>
+                                </table>
+                                <ul className="pagination">
+                                    {pages.map(pNo => {
+                                        let clName = pNo == pageNum ? 'page-item active' : 'page-item'
+                                        return (
+                                            <li className={clName} key={pNo} onClick={() => this.changePage(pNo)}>
+                                                <a className="page-link" href="#">{pNo}</a>
+                                            </li>
+                                        )
+                                    })
+                                    }
 
-                    </ul>
-                </div>
-            </div>
+                                </ul>
+                            </div>
+                        </div>
+                }
+            </>
         )
     }
 }
