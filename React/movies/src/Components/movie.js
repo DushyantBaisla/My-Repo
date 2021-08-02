@@ -8,15 +8,18 @@ export default class movie extends Component {
             movies: [],
             searchText: '',
             pageNum: 1,
-            limit: 4
+            limit: 4,
+            genres: [{ _id: 'abd', name: "All Genres" }],
+            cGenre: 'All Genres'
         }
     }
     async componentDidMount() {
-        console.log("promise");
         let promiseObj = await axios.get("https://backend-react-movie.herokuapp.com/movies");
+        let genrePromise = await axios.get("https://backend-react-movie.herokuapp.com/genres")
 
         this.setState({
-            movies: promiseObj.data.movies
+            movies: promiseObj.data.movies,
+            genres: [...this.state.genres, ...genrePromise.data.genres]
         })
     }
     //---------Deleting movie------------
@@ -57,13 +60,22 @@ export default class movie extends Component {
     changePage = (pNo) => {
         this.setState({ pageNum: pNo })
     }
+
+    //----------- Change Genre --------------
+    changeGenre = (genre) => {
+        this.setState({
+            cGenre: genre
+        })
+    }
+
     //----------------- Render function -------------
 
     render() {
 
         //-------------Filtering movies --------
-        let { movies, searchText, pageNum, limit } = this.state;
+        let { movies, searchText, pageNum, limit, genres, cGenre } = this.state;
         let filteredMovies = [];
+
         if (searchText !== '') {
             filteredMovies = movies.filter(movieObj => {
                 let title = movieObj.title.trim().toLowerCase();
@@ -71,6 +83,12 @@ export default class movie extends Component {
             })
         } else {
             filteredMovies = movies;
+        }
+
+        if (cGenre != 'All Genres') {
+            filteredMovies = filteredMovies.filter(movieObj => {
+                return movieObj.genre.name == cGenre
+            })
         }
 
         //--------- Pagination ---------
@@ -85,6 +103,9 @@ export default class movie extends Component {
         let ei = si + limit;
         filteredMovies = filteredMovies.slice(si, ei);
 
+        if (filteredMovies.length === 0 && movies.length != 0) {
+            this.changePage(pageNum - 1);
+        }
         //-------------Filtering movies --------
 
         return (
@@ -101,7 +122,19 @@ export default class movie extends Component {
                         <div className='row'>
                             {/* */}
                             <div className='col-3'>
+                                <ul className='list-group'>
+                                    {
+                                        genres.map(genreObj => {
+                                            let clName = genreObj.name == cGenre ? "list-group-item active" : 'list-group-item';
 
+                                            return (
+                                                <li className={clName} key={genreObj._id} onClick={() => this.changeGenre(genreObj.name)}>
+                                                    {genreObj.name}
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
                             </div>
                             {/*----------Movies Table Area----------*/}
                             <div className='col-9'>
@@ -135,7 +168,7 @@ export default class movie extends Component {
                                 </table>
                                 <ul className="pagination">
                                     {pages.map(pNo => {
-                                        let clName = pNo == pageNum ? 'page-item active' : 'page-item'
+                                        let clName = pNo === pageNum ? 'page-item active' : 'page-item'
                                         return (
                                             <li className={clName} key={pNo} onClick={() => this.changePage(pNo)}>
                                                 <a className="page-link" href="#">{pNo}</a>
