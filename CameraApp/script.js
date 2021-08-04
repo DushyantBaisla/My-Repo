@@ -58,6 +58,7 @@ function capture(){
     let c = document.createElement("canvas");
     c.width = videoPlayer.videoWidth;
     c.height = videoPlayer.videoHeight;
+   
     //make tool and draw image
     let tool = c.getContext("2d");
     tool.drawImage(videoPlayer, 0, 0);

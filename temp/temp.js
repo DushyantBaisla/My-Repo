@@ -1,12 +1,15 @@
-function Pet(name){
-    this.name = name;
-    this.getName = () => this.name;
+var a = 10;
+
+function fn(){
+    var a = 20;
+    a++
+    console.log('5', a);
+    if(true){
+        var a = 30;
+        console.log('8', a);
+    }
+    console.log('10', a);
 }
-
-const cat = new Pet("Fluffy");
-
-console.log(cat.getName())
-
-const{getName} = cat;
-
-console.log(getName());
+console.log('12', a);
+fn();
+console.log("14", a);

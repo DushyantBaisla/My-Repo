@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { getMovies } from './getMovies'
 import axios from 'axios'
+
 export default class movie extends Component {
     constructor(props) {
         super(props)
