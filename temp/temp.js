@@ -1,15 +1,8 @@
-var a = 10;
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
-function fn(){
-    var a = 20;
-    a++
-    console.log('5', a);
-    if(true){
-        var a = 30;
-        console.log('8', a);
-    }
-    console.log('10', a);
-}
-console.log('12', a);
-fn();
-console.log("14", a);
+  let x = getRandomInt(500, 1000);
+  let y = getRandomInt(500, 1000);
+  let ran = getRandomInt(x, y)
+  console.log(ran);
