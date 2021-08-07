@@ -38,7 +38,7 @@ export default class movie extends Component {
         let txt = e.target.value;
         this.setState({
             searchText: txt
-        })
+        })  
     }
     //----Sort by Ratings------
     sortRatings = (e) => {
