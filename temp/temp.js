@@ -19,4 +19,21 @@
     #4 str.trim() => removes unwanted spaces in string
     #5 str.split(splitting parameter) => splits array according to parameter and returns it in an array
 */
+// Memory : a => 10
+/*
 
+[ 
+  { name: "Roorkee", rainfall: [5, 6, 5, 5, 4, 7, 8] }, 
+  { name: "Pauri", rainfall: [3, 3, 3, 1, 2, 2, 2] }, 
+]
+
+*/
+function fn(x=10, y){
+  return x*2
+};
+console.log(fn());
+
+
+function randomAdder(arr = ["a ", "b"]) {
+  arr[arr.length * arr.length] = arr.length * arr.length;
+};

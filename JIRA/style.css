@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
+.menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 7%;
+  background-color: grey;
+}
+.task-container {
+  height: 93%;
+  background-color: aqua;
+}
+
+.add-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  width: 8rem;
+  background-color: bisque;
+  margin-left: 5rem;
+}
+
+.change-color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  width: 20rem;
+  background-color: darkgray;
+}
+.c {
+  height: 60%;
+  width: 20%;
+  margin: 5px;
+}
+
+
+.add {
+  border: 1px solid;
+  height: 90%;
+  width: 45%;
+  margin: 5px;
+  background-color: green;
+}
+.delete {
+  border: 1px solid;
+  height: 90%;
+  width: 45%;
+  margin: 5px;
+  background-color: red;
+}
+
+.container {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  left: 30%;
+  top: 35%;
+  height: 65%;
+  width: 45%;
+  border: 1px solid;
+}
+
+.input {
+  height: 100%;
+  width: 80%;
+  background-color: white;
+}
+
+.color-select {
+  height: 100%;
+  width: 22%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: blueviolet;
+}
+.c1 {
+    height: 14%;
+    width: 44%;
+    margin: 15px;
+  }
