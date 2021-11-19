@@ -1,0 +1,5 @@
+HTTP REQUESTS :
+get : to get data from database
+post : to post data in database
+patch : to update data in database for existing entries
+delete : to delete data in database
